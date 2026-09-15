@@ -15,8 +15,6 @@
   --color-brand-purple: #7028b8;
   --color-brand-yellow: #f8b818;
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
   --font-display: var(--font-josefin);
 }
 
