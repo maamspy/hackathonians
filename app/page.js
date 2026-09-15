@@ -33,8 +33,8 @@ export default function Home() {
             <Button color="blue" href="/projects">
               BROWSE OUR PROJECTS
             </Button>
-            <Button color="purple" href="/upcoming">
-              EXPLORE MORE HACKATHONS
+            <Button color="purple" href="/upcoming" target="_self">
+              EXPLORE MORE
             </Button>
           </div>
         </div>
