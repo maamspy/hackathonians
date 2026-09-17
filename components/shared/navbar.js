@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "@/components/logo";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -31,27 +31,27 @@ export default function Navbar() {
   const solid = !onHome || scrolled;
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
-        solid
-          ? "border-b border-[rgba(254,254,254,0.1)] bg-[rgba(4,4,2,0.95)]"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <nav className="container mx-auto flex h-16 items-center justify-between px-3">
+    <header className="sticky top-0 z-50 w-full">
+      <div
+        aria-hidden
+        className={`absolute inset-0 border-b transition-opacity duration-300 ${
+          solid
+            ? "border-border bg-background/95 opacity-100"
+            : "border-transparent opacity-0"
+        }`}
+      />
+      <nav className="relative container mx-auto flex h-16 items-center justify-between px-3">
         <Link
           href="/"
           className="flex items-center gap-2"
           onClick={() => setOpen(false)}
         >
-          <Image
-            src="/assets/logo.jpeg"
-            alt="Hackathonians logo"
-            width={40}
-            height={40}
-            className="h-8 w-8 object-contain sm:h-9 sm:w-9"
-          />
-          <span className="font-display text-lg font-bold uppercase tracking-tight text-brand-white">
+          <Logo variant="nav" className="h-6 w-auto sm:h-7" />
+          <span
+            className={`font-display text-lg font-bold uppercase tracking-tight transition-colors duration-300 ${
+              solid ? "text-foreground" : "text-brand-white"
+            }`}
+          >
             Hackathonians
           </span>
         </Link>
@@ -64,7 +64,9 @@ export default function Navbar() {
                 className={`block px-4 py-2 text-sm font-bold uppercase tracking-tight transition hover:text-brand-blue ${
                   isActive(pathname, href)
                     ? "text-brand-blue"
-                    : "text-brand-white"
+                    : solid
+                      ? "text-foreground"
+                      : "text-brand-white"
                 }`}
               >
                 {label}
@@ -79,20 +81,22 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+          className={`flex h-10 w-10 flex-col items-center justify-center gap-1.5 transition-colors duration-300 md:hidden ${
+            solid ? "text-foreground" : "text-brand-white"
+          }`}
         >
           <span
-            className={`h-0.5 w-6 bg-brand-white transition ${
+            className={`h-0.5 w-6 bg-current transition ${
               open ? "translate-y-2 rotate-45" : ""
             }`}
           />
           <span
-            className={`h-0.5 w-6 bg-brand-white transition ${
+            className={`h-0.5 w-6 bg-current transition ${
               open ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`h-0.5 w-6 bg-brand-white transition ${
+            className={`h-0.5 w-6 bg-current transition ${
               open ? "-translate-y-2 -rotate-45" : ""
             }`}
           />
@@ -102,7 +106,7 @@ export default function Navbar() {
       {open && (
         <ul
           id="mobile-nav"
-          className="border-t border-brand-white/10 bg-brand-black md:hidden"
+          className="border-t border-border bg-background md:hidden"
         >
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href}>
@@ -112,7 +116,7 @@ export default function Navbar() {
                 className={`block px-4 py-3 text-sm font-bold uppercase tracking-tight transition hover:text-brand-blue ${
                   isActive(pathname, href)
                     ? "bg-brand-blue/10 text-brand-blue"
-                    : "text-brand-white"
+                    : "text-foreground"
                 }`}
               >
                 {label}
