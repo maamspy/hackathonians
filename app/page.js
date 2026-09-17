@@ -1,29 +1,28 @@
 import Image from "next/image";
 import Button from "@/components/button";
+import Logo from "@/components/logo";
 
 export default function Home() {
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-brand-black">
-      <div
+    <div className="relative -mt-16 h-dvh w-full overflow-hidden bg-brand-black">
+      <Image
+        src="/assets/images/bg.jpeg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
         aria-hidden
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url(/assets/images/bg.jpeg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        className="object-cover"
       />
       <div aria-hidden className="absolute inset-0 bg-brand-black/70" />
       <main className="relative mx-auto flex h-full w-full max-w-220 flex-col items-center px-3 text-center text-brand-white">
         <div aria-hidden className="max-h-[50dvh] flex-1" />
         <div className="flex w-full flex-col items-center">
-          <Image
-            src="/assets/logo.jpeg"
-            alt="Hackathonians logo"
-            width={224}
-            height={224}
+          <Logo
+            variant="main"
+            mode="dark"
             priority
-            className="mb-3 h-20 w-20 object-contain sm:h-24 sm:w-24 md:h-28 md:w-28"
+            className="mb-3 h-20 w-auto sm:h-24 md:h-28"
           />
           <h1 className="font-display text-[clamp(1.75rem,5.5vw,3.75rem)] font-bold leading-tight tracking-tight">
             Cool teenagers gathered, hacked and built amazing web projects
