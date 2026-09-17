@@ -3,7 +3,7 @@ import Button from "@/components/button";
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-dvh w-screen overflow-hidden bg-background">
+    <div className="relative min-h-dvh w-full overflow-hidden bg-background">
       <main className="relative mx-auto flex min-h-dvh w-full max-w-220 flex-col items-center justify-center px-3 text-center text-brand-white">
         <Image
           src="/assets/logo.jpeg"

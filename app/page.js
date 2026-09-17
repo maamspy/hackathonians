@@ -3,7 +3,7 @@ import Button from "@/components/button";
 
 export default function Home() {
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-brand-black">
+    <div className="relative -mt-16 h-dvh w-full overflow-hidden bg-brand-black">
       <div
         aria-hidden
         className="absolute inset-0"

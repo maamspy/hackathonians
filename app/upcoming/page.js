@@ -56,16 +56,16 @@ export default async function UpcomingPage() {
                             href={`https://github.com/${member.github}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-3"
+                            className="flex min-w-0 items-center gap-3"
                           >
                             <Image
                               src={member.avatarUrl}
                               alt={`${member.name} avatar`}
                               width={48}
                               height={48}
-                              className="h-8 w-8 object-contain"
+                              className="h-8 w-8 shrink-0 object-contain"
                             />
-                            <span className="font-bold text-brand-white transition hover:text-brand-blue">
+                            <span className="min-w-0 wrap-break-word font-bold text-brand-white transition hover:text-brand-blue">
                               {member.name}
                             </span>
                           </a>
