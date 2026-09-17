@@ -40,18 +40,14 @@ export default function Navbar() {
             : "border-transparent opacity-0"
         }`}
       />
-      <nav className="relative container mx-auto flex h-16 items-center justify-between px-3">
+      <nav className="relative container mx-auto flex h-16 items-center justify-between gap-4 px-3">
         <Link
           href="/"
-          className="flex items-center gap-2"
+          className="flex min-w-0 items-center gap-2"
           onClick={() => setOpen(false)}
         >
-          <Logo variant="nav" className="h-6 w-auto sm:h-7" />
-          <span
-            className={`font-display text-lg font-bold uppercase tracking-tight transition-colors duration-300 ${
-              solid ? "text-foreground" : "text-brand-white"
-            }`}
-          >
+          <Logo variant="nav" className="h-6 w-auto shrink-0 sm:h-7" />
+          <span className="truncate font-display text-lg font-bold uppercase tracking-tight text-foreground">
             Hackathonians
           </span>
         </Link>
@@ -61,12 +57,10 @@ export default function Navbar() {
             <li key={href}>
               <Link
                 href={href}
-                className={`block px-4 py-2 text-sm font-bold uppercase tracking-tight transition hover:text-brand-blue ${
+                className={`block whitespace-nowrap px-4 py-2 text-sm font-bold uppercase tracking-tight transition hover:text-brand-blue ${
                   isActive(pathname, href)
                     ? "text-brand-blue"
-                    : solid
-                      ? "text-foreground"
-                      : "text-brand-white"
+                    : "text-foreground"
                 }`}
               >
                 {label}
@@ -81,9 +75,7 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className={`flex h-10 w-10 flex-col items-center justify-center gap-1.5 transition-colors duration-300 md:hidden ${
-            solid ? "text-foreground" : "text-brand-white"
-          }`}
+          className="flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 text-foreground transition-colors md:hidden"
         >
           <span
             className={`h-0.5 w-6 bg-current transition ${
@@ -103,28 +95,33 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {open && (
-        <ul
-          id="mobile-nav"
-          className="border-t border-border bg-background md:hidden"
-        >
-          {NAV_LINKS.map(({ href, label }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                onClick={() => setOpen(false)}
-                className={`block px-4 py-3 text-sm font-bold uppercase tracking-tight transition hover:text-brand-blue ${
-                  isActive(pathname, href)
-                    ? "bg-brand-blue/10 text-brand-blue"
-                    : "text-foreground"
-                }`}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div
+        id="mobile-nav"
+        aria-hidden={!open}
+        className={`relative grid transition-[grid-template-rows] duration-300 ease-out md:hidden ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <ul className="flex flex-col border-t border-border bg-background px-3 pb-4 pt-2">
+            {NAV_LINKS.map(({ href, label }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className={`flex min-h-11 items-center rounded-sm px-4 text-sm font-bold uppercase tracking-tight transition hover:bg-foreground/5 hover:text-brand-blue ${
+                    isActive(pathname, href)
+                      ? "bg-brand-blue/10 text-brand-blue"
+                      : "text-foreground"
+                  }`}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </header>
   );
 }
