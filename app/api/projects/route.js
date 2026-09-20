@@ -45,8 +45,11 @@ export async function GET() {
             ? {
                 id: team.event.id,
                 name: team.event.name,
-                organizer: team.event.organizer,
+                host: team.event.host,
                 accent: team.event.accent,
+                poweredBy: team.event.poweredBy ?? null,
+                festivalName: team.event.festivalName ?? null,
+                venue: team.event.venue ?? null,
               }
             : null,
           members,

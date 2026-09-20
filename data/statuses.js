@@ -9,5 +9,6 @@ export const STATUSES = [
   { id: "FINALIST", label: "Finalist" },
   { id: "RUNNERS_UP", label: "Runners Up" },
   { id: "CHAMPION", label: "Champion" },
+  { id: "TOP_SCORER", label: "Individual Top Scorer" },
   { id: "ABSENT", label: "Absent" },
 ];

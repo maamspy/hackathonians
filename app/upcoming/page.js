@@ -52,7 +52,7 @@ export default async function UpcomingPage() {
               We will be joining the next one soon.
             </p>
             <div className="mt-6 flex justify-center">
-              <Button color="blue" href="/projects" target="_self">
+              <Button color="blue" href="/previous" target="_self">
                 View previous hackathons
               </Button>
             </div>

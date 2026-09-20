@@ -115,9 +115,11 @@ export default function ProjectsPage() {
                         <span className="block text-brand-blue">
                           {project.event.name}
                         </span>
-                        <span className="block truncate">
-                          by {project.event.organizer}
-                        </span>
+                        {(project.event.poweredBy ?? project.event.host) && (
+                          <span className="block truncate">
+                            by {project.event.poweredBy ?? project.event.host}
+                          </span>
+                        )}
                       </p>
                     )}
                     {project.members?.length > 0 && (
