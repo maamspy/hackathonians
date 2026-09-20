@@ -1,5 +1,4 @@
-import Button from "@/components/button";
-import Logo from "@/components/logo";
+import { Button, Logo } from "@/components/custom";
 
 export default function NotFound() {
   return (

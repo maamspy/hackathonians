@@ -1,6 +1,5 @@
 import { Josefin_Sans } from "next/font/google";
-import Navbar from "@/components/shared/navbar";
-import Footer from "@/components/shared/footer";
+import { Footer, Navbar } from "@/components/shared";
 import Providers from "@/providers/main";
 import "./globals.css";
 

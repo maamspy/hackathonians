@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/ui";
-import Logo from "@/components/logo";
+import { Logo } from "@/components/custom";
 
 const FOOTER_LINKS = [
   { href: "/", label: "Home" },
