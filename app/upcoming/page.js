@@ -1,23 +1,40 @@
 import Image from "next/image";
-import { EVENTS } from "@/data/events";
+import { db } from "@/data";
+import { Button } from "@/components/custom";
 import { getGitHubProfile } from "@/lib/github";
 
 export default async function UpcomingPage() {
+  const teams = db.join("teams", "eventId", "event");
+  const membersById = new Map(
+    db.members.all().map((member) => [member.id, member]),
+  );
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const events = await Promise.all(
-    EVENTS.map(async (event) => ({
-      ...event,
-      teams: await Promise.all(
-        event.teams.map(async (team) => ({
-          ...team,
-          members: await Promise.all(
-            team.members.map(async (member) => ({
-              github: member.github,
-              ...(await getGitHubProfile(member.github)),
+    db.events
+      .all()
+      .filter((event) => new Date(event.date) >= today)
+      .map(async (event) => ({
+        ...event,
+        teams: await Promise.all(
+          teams
+            .filter((team) => team.eventId === event.id)
+            .map(async (team) => ({
+              ...team,
+              members: await Promise.all(
+                team.members.map(async (memberId) => {
+                  const github = membersById.get(memberId).github;
+                  return {
+                    github,
+                    ...(await getGitHubProfile(github)),
+                  };
+                }),
+              ),
             })),
-          ),
-        })),
-      ),
-    })),
+        ),
+      })),
   );
 
   return (
@@ -34,6 +51,11 @@ export default async function UpcomingPage() {
             <p className="mt-2 text-foreground/70">
               We will be joining the next one soon.
             </p>
+            <div className="mt-6 flex justify-center">
+              <Button color="blue" href="/projects" target="_self">
+                View previous hackathons
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="mt-10 flex flex-col gap-10">

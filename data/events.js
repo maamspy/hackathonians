@@ -1,11 +1,20 @@
-export const STATUS = {
-  REGISTERED: "Registered",
-  SHORTLISTED: "Shortlisted",
-  TOP_10: "Top 10",
-  FINALIST: "Finalist",
-  RUNNERS_UP: "Runners Up",
-  CHAMPION: "Champion",
-  ABSENT: "Absent",
+export const schema = {
+  primaryKey: "id",
 };
 
-export const EVENTS = [];
+export const EVENTS = [
+  {
+    id: "infinity-ai-buildfest-2026",
+    name: "The Infinity AI BuildFest 2026",
+    organizer: "CloudCamp Bangladesh",
+    accent: "blue",
+    date: "2026-06-12",
+  },
+  {
+    id: "signature-hackathon",
+    name: "The Signature Hackathon",
+    organizer: "Programming Hero",
+    accent: "purple",
+    date: "2025-09-19",
+  },
+];

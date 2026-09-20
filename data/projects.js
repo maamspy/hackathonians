@@ -1,3 +1,10 @@
+export const schema = {
+  primaryKey: "id",
+  foreignKeys: [
+    { column: "teamId", references: "teams", on: "id", as: "team" },
+  ],
+};
+
 export const PROJECTS = [
   {
     id: "1",
@@ -6,19 +13,8 @@ export const PROJECTS = [
     description:
       "Reads live shopper signals and turns them into personalized prices, intent-based search and churn alerts.",
     accent: "blue",
-    event: {
-      name: "The Infinity AI BuildFest 2026",
-      organizer: "CloudCamp Bangladesh",
-    },
+    teamId: "hkthns",
     tags: ["Next.js", "FastAPI", "Pinecone", "PostgreSQL", "Docker"],
-    members: [
-      "maamspy",
-      "saminyasar004",
-      "smabdullah2002",
-      "samihaTasnim",
-      "samiha012",
-      "salehinRifat",
-    ],
     links: {
       github: "https://github.com/maamspy/behaviourIQ",
       demo: "http://biq-web.nxs.bd/",
@@ -31,11 +27,7 @@ export const PROJECTS = [
     description:
       "A blockchain-based transparency platform to track Bangladeshi government projects via tamper-proof records, IPFS document hashing and AI-verified citizen feedback.",
     accent: "purple",
-    event: {
-      name: "The Signature Hackathon",
-      organizer: "Programming Hero",
-    },
+    teamId: "bx",
     tags: ["Hardhat"],
-    members: ["maamspy", "saminyasar004", "mahiamOmO", "ProgEuler"],
   },
 ];
