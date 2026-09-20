@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       className={`${josefin.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col overflow-x-clip">
         <Providers>
           <Navbar />
           <div className="container mx-auto flex flex-1 flex-col px-3">

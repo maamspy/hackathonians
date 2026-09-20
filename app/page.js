@@ -3,7 +3,7 @@ import { Button, Logo } from "@/components/custom";
 
 export default function Home() {
   return (
-    <div className="relative -mt-16 h-dvh w-full overflow-hidden bg-brand-black">
+    <div className="relative -mt-16 ml-[calc(50%-50dvw)] h-dvh w-dvw overflow-hidden bg-brand-black">
       <Image
         src="/assets/images/bg.jpeg"
         alt=""
@@ -14,7 +14,7 @@ export default function Home() {
         className="object-cover"
       />
       <div aria-hidden className="absolute inset-0 bg-brand-black/70" />
-      <main className="relative mx-auto flex h-full w-full max-w-220 flex-col items-center text-center text-brand-white">
+      <main className="relative mx-auto flex h-full w-full max-w-220 flex-col items-center px-3 text-center text-brand-white">
         <div aria-hidden className="max-h-[50dvh] flex-1" />
         <div className="flex w-full flex-col items-center">
           <Logo
