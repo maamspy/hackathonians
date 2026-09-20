@@ -3,7 +3,7 @@ import { Button, Logo } from "@/components/custom";
 
 export default function Home() {
   return (
-    <div className="relative -mt-16 h-dvh w-full overflow-hidden bg-brand-black">
+    <div className="relative -mt-16 ml-[calc(50%-50dvw)] h-dvh w-dvw overflow-hidden bg-brand-black">
       <Image
         src="/assets/images/bg.jpeg"
         alt=""

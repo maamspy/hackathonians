@@ -12,7 +12,9 @@ const NAV_LINKS = [
 ];
 
 function isActive(pathname, href) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return href === "/"
+    ? pathname === href
+    : pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export default function Navbar() {
