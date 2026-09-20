@@ -14,7 +14,7 @@ export default function Home() {
         className="object-cover"
       />
       <div aria-hidden className="absolute inset-0 bg-brand-black/70" />
-      <main className="relative mx-auto flex h-full w-full max-w-220 flex-col items-center px-3 text-center text-brand-white">
+      <main className="relative mx-auto flex h-full w-full max-w-220 flex-col items-center text-center text-brand-white">
         <div aria-hidden className="max-h-[50dvh] flex-1" />
         <div className="flex w-full flex-col items-center">
           <Logo

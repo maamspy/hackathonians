@@ -22,7 +22,7 @@ export default async function UpcomingPage() {
 
   return (
     <div className="bg-background font-display text-foreground">
-      <main className="container mx-auto py-10">
+      <main className="py-10">
         <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
           Hackathons we are joining
         </h1>
