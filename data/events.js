@@ -4,6 +4,19 @@ export const schema = {
 
 export const EVENTS = [
   {
+    id: "inventious-4-1",
+    name: "INVENTIOUS 4.1",
+    host: "MIST Innovation Club",
+    accent: "blue",
+    date: "2025-02-28",
+    poweredBy: "DBL Ceramics & Programming Hero",
+    festivalName: "NEOFETCH Hackathon",
+    venue: {
+      type: "onsite",
+      name: "Military Institute of Science and Technology (MIST), Dhaka",
+    },
+  },
+  {
     id: "ai-engineering-hackathon",
     name: "AI Engineering Hackathon",
     host: "Poridhi.io",

@@ -67,4 +67,10 @@ export const TEAMS = [
     statuses: ["TOP_SCORER", "FINALIST"],
     rank: 4,
   },
+  {
+    id: "nomads",
+    eventId: "inventious-4-1",
+    name: "Nomads",
+    members: ["ProgEuler", "samihaTasnim", "saminyasar004", "sr-tamim"],
+  },
 ];

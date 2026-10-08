@@ -56,4 +56,11 @@ export const MEMBERS = [
   { id: "nfornoor", github: "nfornoor", membership: true },
   { id: "Jisan-mia", github: "Jisan-mia", membership: false },
   { id: "alex-pythonista", github: "alex-pythonista", membership: false },
+  {
+    id: "sr-tamim",
+    github: "sr-tamim",
+    membership: true,
+    linkedin: "srtamim",
+    website: "https://sr-tamim.vercel.app/",
+  },
 ];
