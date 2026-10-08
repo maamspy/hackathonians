@@ -4,14 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/custom";
-
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/members", label: "Members" },
-  { href: "/mentors", label: "Mentors" },
-  { href: "/blog", label: "Blog" },
-];
+import { NAV_LINKS } from "./links";
 
 function isActive(pathname, href) {
   return href === "/"
