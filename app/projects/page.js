@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Code, ExternalLink } from "lucide-react";
 import {
   Avatar,
@@ -8,6 +5,7 @@ import {
   AvatarGroup,
   AvatarImage,
 } from "@/components/ui";
+import { getProjects } from "@/lib/projects";
 
 const ACCENTS = {
   blue: "bg-brand-blue",
@@ -15,22 +13,8 @@ const ACCENTS = {
   yellow: "bg-brand-yellow",
 };
 
-export default function ProjectsPage() {
-  const [projects, setProjects] = useState([]);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/projects")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch projects");
-        return res.json();
-      })
-      .then((body) => {
-        if (!body.success) throw new Error(body.error?.message);
-        setProjects(body.data.projects);
-      })
-      .catch(() => setError(true));
-  }, []);
+export default async function ProjectsPage() {
+  const projects = await getProjects();
 
   return (
     <div className="bg-background font-display text-foreground">
@@ -45,12 +29,13 @@ export default function ProjectsPage() {
         </header>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {error && (
-            <p className="text-foreground/70">
-              Failed to load projects. Please try again.
-            </p>
-          )}
-          {!error &&
+          {projects.length === 0 ? (
+            <div className="rounded-lg border border-dashed border-border bg-foreground/5 p-10 text-center sm:col-span-2 sm:p-14 lg:col-span-3">
+              <p className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                No projects yet.
+              </p>
+            </div>
+          ) : (
             projects.map((project) => (
               <article
                 key={project.id}
@@ -148,7 +133,8 @@ export default function ProjectsPage() {
                   </div>
                 </div>
               </article>
-            ))}
+            ))
+          )}
         </div>
       </main>
     </div>
