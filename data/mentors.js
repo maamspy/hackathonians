@@ -1,0 +1,47 @@
+export const schema = {
+  primaryKey: "id",
+};
+
+export const MENTORS = [
+  {
+    id: "tahnik-ahmed",
+    name: "Tahnik Ahmed",
+    role: "Lead ML & DataOps Engineer",
+    organization: "Poridhi",
+    organizationUrl: "https://poridhi.io/",
+    image: "/images/tahnik-ahmed-vai.jpeg",
+    bio: "Builds infrastructure that makes AI systems work in production. Inference engine internals, self-healing Kubernetes platforms and fault-tolerant MLOps pipelines. Maintains OSS tooling and writes up what broke along the way.",
+    topics: ["MLOps", "AI Infra"],
+    github: "tahhnik",
+    linkedin: "tahnikahmed",
+    website: "https://tahnik.codes/",
+    accent: "purple",
+    featured: true,
+  },
+  {
+    id: "rajib-mia",
+    name: "Md Rajib Mia",
+    role: "Senior Lecturer, Department of Software Engineering",
+    organization: "Daffodil International University",
+    image: "/images/rajib-sir.png",
+    bio: "Currently pursuing a Ph.D. in Computing, specializing in Artificial Intelligence, at Boise State University, USA. Research interests include Deep Learning, Machine Learning, Bioinformatics and Artificial Intelligence.",
+    linkedin: "mdrajibmia101",
+    topics: ["Artificial Intelligence", "Data Analysis"],
+    researchgate: "Md-Rajib-Mia",
+    website: "https://faculty.daffodilvarsity.edu.bd/profile/swe/rajibmia.html",
+    accent: "blue",
+    featured: true,
+  },
+  {
+    id: "zebon",
+    name: "Md. Abdul Hye Zebon",
+    role: "Lecturer, Department of Software Engineering",
+    organization: "Daffodil International University",
+    image: "/images/zebon-sir.png",
+    topics: ["Machine Learning"],
+    researchgate: "Md-Abdul-Hye-Zebon",
+    website: "https://faculty.daffodilvarsity.edu.bd/profile/swe/zebon.html",
+    accent: "yellow",
+    featured: true,
+  },
+];

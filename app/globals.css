@@ -166,3 +166,50 @@
     @apply font-sans;
   }
 }
+
+.prose-hackathonians {
+  @apply text-foreground/80 leading-relaxed;
+}
+.prose-hackathonians > * + * {
+  @apply mt-5;
+}
+.prose-hackathonians h2 {
+  @apply mt-10 text-2xl font-bold tracking-tight text-foreground;
+}
+.prose-hackathonians h3 {
+  @apply mt-8 text-xl font-bold tracking-tight text-foreground;
+}
+.prose-hackathonians a {
+  @apply font-bold text-brand-blue underline underline-offset-4;
+}
+.prose-hackathonians strong {
+  @apply font-bold text-foreground;
+}
+.prose-hackathonians ul {
+  @apply list-disc space-y-2 pl-6 marker:text-brand-blue;
+}
+.prose-hackathonians ol {
+  @apply list-decimal space-y-2 pl-6 marker:font-bold marker:text-foreground/50;
+}
+.prose-hackathonians blockquote {
+  @apply border-l-4 border-brand-blue pl-4 italic text-foreground/70;
+}
+.prose-hackathonians pre {
+  @apply overflow-x-auto rounded-lg bg-foreground/5 p-4 text-sm;
+}
+.prose-hackathonians code {
+  @apply font-mono text-sm;
+}
+.prose-hackathonians :not(pre) > code {
+  @apply rounded-sm bg-foreground/10 px-1.5 py-0.5;
+}
+.prose-hackathonians hr {
+  @apply border-border;
+}
+.prose-hackathonians table {
+  @apply w-full text-left text-sm;
+}
+.prose-hackathonians th,
+.prose-hackathonians td {
+  @apply border-b border-border px-3 py-2;
+}

@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/ui";
 import { Logo } from "@/components/custom";
-
-const FOOTER_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/upcoming", label: "Upcoming" },
-  { href: "/projects", label: "Projects" },
-];
+import { NAV_LINKS } from "./links";
 
 export default function Footer() {
   return (
@@ -27,7 +22,7 @@ export default function Footer() {
             Pages
           </h2>
           <ul className="mt-3 flex flex-col gap-2">
-            {FOOTER_LINKS.map(({ href, label }) => (
+            {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
