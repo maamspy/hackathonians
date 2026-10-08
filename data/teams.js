@@ -3,7 +3,7 @@ export const schema = {
   foreignKeys: [
     { column: "eventId", references: "events", on: "id", as: "event" },
     { column: "statuses", references: "statuses", on: "id", as: "status" },
-    { column: "advisors", references: "advisors", on: "id", as: "advisor" },
+    { column: "mentors", references: "mentors", on: "id", as: "mentor" },
   ],
 };
 
@@ -38,7 +38,7 @@ export const TEAMS = [
       "samihaTasnim",
       "salehinRifat",
     ],
-    advisors: ["zebon", "rajib-mia"],
+    mentors: ["zebon", "rajib-mia"],
   },
   {
     id: "bx",

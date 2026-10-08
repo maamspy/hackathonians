@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Hash } from "lucide-react";
 import { db } from "@/data";
 import { getGitHubProfile } from "@/lib/github";
-import { resolveAdvisors } from "@/lib/advisors";
+import { resolveMentors } from "@/lib/mentors";
 import { joinNames } from "@/lib/utils";
 
 const formatDate = (date) =>
@@ -16,7 +16,7 @@ export default async function PreviousPage() {
   const teams = db.join("teams", "eventId", "event").map((team) => ({
     ...team,
     statuses: (team.statuses ?? []).map((id) => db.statuses.findById(id)),
-    advisors: resolveAdvisors(team.advisors),
+    mentors: resolveMentors(team.mentors),
   }));
 
   const membersById = new Map(
@@ -157,13 +157,13 @@ export default async function PreviousPage() {
                         ))}
                       </ul>
 
-                      {team.advisors.length > 0 && (
+                      {team.mentors.length > 0 && (
                         <div className="mt-5 border-t border-border pt-4">
                           <p className="text-xs font-bold uppercase tracking-tight text-foreground/50">
-                            Advised by
+                            Mentored by
                           </p>
                           <p className="mt-1 text-sm font-bold text-foreground">
-                            {joinNames(team.advisors.map((a) => a.name))}
+                            {joinNames(team.mentors.map((m) => m.name))}
                           </p>
                         </div>
                       )}

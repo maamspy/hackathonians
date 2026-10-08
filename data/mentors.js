@@ -2,7 +2,7 @@ export const schema = {
   primaryKey: "id",
 };
 
-export const ADVISORS = [
+export const MENTORS = [
   {
     id: "tahnik-ahmed",
     name: "Tahnik Ahmed",

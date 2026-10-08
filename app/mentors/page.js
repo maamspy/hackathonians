@@ -12,60 +12,60 @@ const SOCIALS = [
   {
     key: "github",
     label: "GitHub",
-    href: (a) => `https://github.com/${a.github}`,
+    href: (m) => `https://github.com/${m.github}`,
     Icon: FaGithub,
   },
   {
     key: "linkedin",
     label: "LinkedIn",
-    href: (a) => `https://linkedin.com/in/${a.linkedin}`,
+    href: (m) => `https://linkedin.com/in/${m.linkedin}`,
     Icon: FaLinkedin,
   },
-  { key: "website", label: "Website", href: (a) => a.website, Icon: FaGlobe },
+  { key: "website", label: "Website", href: (m) => m.website, Icon: FaGlobe },
 ];
 
 export const metadata = {
-  title: "Advisors",
-  description: "The mentors and reviewers who show up for our teams.",
+  title: "Mentors",
+  description: "The mentors who show up for our teams.",
 };
 
-export default async function AdvisorsPage() {
-  const advisors = db.advisors.all().filter((advisor) => advisor.featured);
+export default async function MentorsPage() {
+  const mentors = db.mentors.all().filter((mentor) => mentor.featured);
 
   return (
     <div className="bg-background font-display text-foreground">
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
-            Advisors
+            Mentors
           </h1>
           <p className="mt-3 text-lg text-foreground/70">
-            The mentors and reviewers who show up for our teams.
+            The mentors who show up for our teams.
           </p>
         </header>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {advisors.length === 0 ? (
+          {mentors.length === 0 ? (
             <div className="rounded-lg border border-dashed border-border bg-foreground/5 p-10 text-center sm:col-span-2 sm:p-14">
               <p className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-                No advisors yet.
+                No mentors yet.
               </p>
             </div>
           ) : (
-            advisors.map((advisor) => (
+            mentors.map((mentor) => (
               <article
-                key={advisor.id}
+                key={mentor.id}
                 className="flex flex-col overflow-hidden rounded-lg bg-card p-6"
               >
                 <span
                   aria-hidden
-                  className={`h-1 w-10 ${ACCENTS[advisor.accent] ?? ACCENTS.blue}`}
+                  className={`h-1 w-10 ${ACCENTS[mentor.accent] ?? ACCENTS.blue}`}
                 />
 
                 <div className="mt-4 flex items-start gap-4">
-                  {advisor.image ? (
+                  {mentor.image ? (
                     <Image
-                      src={advisor.image}
+                      src={mentor.image}
                       alt=""
                       width={48}
                       height={48}
@@ -76,29 +76,29 @@ export default async function AdvisorsPage() {
                       aria-hidden
                       className="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground/10 text-lg font-bold uppercase"
                     >
-                      {advisor.name.slice(0, 2)}
+                      {mentor.name.slice(0, 2)}
                     </div>
                   )}
                   <div className="min-w-0">
                     <h2 className="text-xl font-bold tracking-tight">
-                      {advisor.name}
+                      {mentor.name}
                     </h2>
                     <p className="mt-0.5 text-sm font-bold uppercase tracking-tight text-foreground/60">
-                      {advisor.role}
+                      {mentor.role}
                     </p>
-                    {advisor.organization && (
+                    {mentor.organization && (
                       <p className="text-sm text-foreground/50">
-                        {advisor.organizationUrl ? (
+                        {mentor.organizationUrl ? (
                           <a
-                            href={advisor.organizationUrl}
+                            href={mentor.organizationUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="font-bold transition hover:text-brand-blue"
                           >
-                            {advisor.organization}
+                            {mentor.organization}
                           </a>
                         ) : (
-                          advisor.organization
+                          mentor.organization
                         )}
                       </p>
                     )}
@@ -106,12 +106,12 @@ export default async function AdvisorsPage() {
                 </div>
 
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground/70">
-                  {advisor.bio}
+                  {mentor.bio}
                 </p>
 
-                {(advisor.topics?.length ?? 0) > 0 && (
+                {(mentor.topics?.length ?? 0) > 0 && (
                   <ul className="mt-4 flex flex-wrap gap-2">
-                    {advisor.topics.map((topic) => (
+                    {mentor.topics.map((topic) => (
                       <li
                         key={topic}
                         className="rounded-sm bg-foreground/5 px-2 py-1 text-xs font-bold uppercase tracking-tight text-foreground/70"
@@ -123,15 +123,15 @@ export default async function AdvisorsPage() {
                 )}
 
                 <div className="mt-5 flex shrink-0 items-center gap-4">
-                  {SOCIALS.filter(({ key }) => advisor[key]).map(
+                  {SOCIALS.filter(({ key }) => mentor[key]).map(
                     ({ key, href, Icon, label }) => (
                       <a
                         key={key}
-                        href={href(advisor)}
+                        href={href(mentor)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        title={`${advisor.name} on ${label}`}
-                        aria-label={`${advisor.name} on ${label}`}
+                        title={`${mentor.name} on ${label}`}
+                        aria-label={`${mentor.name} on ${label}`}
                         className="text-foreground transition hover:text-brand-blue"
                       >
                         <Icon className="size-5" aria-hidden />
