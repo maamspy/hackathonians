@@ -2,6 +2,8 @@ import Image from "next/image";
 import { db } from "@/data";
 import { Button } from "@/components/custom";
 import { getGitHubProfile } from "@/lib/github";
+import { resolveAdvisors } from "@/lib/advisors";
+import { joinNames } from "@/lib/utils";
 
 export default async function UpcomingPage() {
   const teams = db.join("teams", "eventId", "event");
@@ -23,6 +25,7 @@ export default async function UpcomingPage() {
             .filter((team) => team.eventId === event.id)
             .map(async (team) => ({
               ...team,
+              advisors: resolveAdvisors(team.advisors),
               members: await Promise.all(
                 team.members.map(async (memberId) => {
                   const github = membersById.get(memberId).github;
@@ -104,6 +107,17 @@ export default async function UpcomingPage() {
                           </li>
                         ))}
                       </ul>
+
+                      {team.advisors.length > 0 && (
+                        <div className="mt-5 border-t border-border pt-4">
+                          <p className="text-xs font-bold uppercase tracking-tight text-foreground/50">
+                            Advised by
+                          </p>
+                          <p className="mt-1 text-sm font-bold text-foreground">
+                            {joinNames(team.advisors.map((a) => a.name))}
+                          </p>
+                        </div>
+                      )}
                     </article>
                   ))}
                 </div>
