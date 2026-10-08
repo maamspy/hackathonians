@@ -7,8 +7,10 @@ import { Logo } from "@/components/custom";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/upcoming", label: "Upcoming" },
   { href: "/projects", label: "Projects" },
+  { href: "/members", label: "Members" },
+  { href: "/advisors", label: "Advisors" },
+  { href: "/blog", label: "Blog" },
 ];
 
 function isActive(pathname, href) {
