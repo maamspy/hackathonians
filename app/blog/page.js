@@ -9,7 +9,7 @@ const ACCENTS = {
 
 export const metadata = {
   title: "Blog",
-  description: "What we shipped and what it cost us.",
+  description: "Announcements, build stories, the occasional 3am thought.",
 };
 
 export default async function BlogPage() {
@@ -25,7 +25,7 @@ export default async function BlogPage() {
             Blog
           </h1>
           <p className="mt-3 text-lg text-foreground/70">
-            What we shipped and what it cost us.
+            Announcements, build stories, the occasional 3am thought.
           </p>
         </header>
 
