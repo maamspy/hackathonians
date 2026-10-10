@@ -4,6 +4,7 @@ import { TEAMS, schema as teamsSchema } from "./teams";
 import { STATUSES, schema as statusesSchema } from "./statuses";
 import { MEMBERS, schema as membersSchema } from "./members";
 import { MENTORS, schema as mentorsSchema } from "./mentors";
+import { ROLES, schema as rolesSchema } from "./roles";
 import { POSTS, schema as postsSchema } from "./posts";
 
 function createTable(name, rows, { primaryKey = "id", foreignKeys = [] } = {}) {
@@ -24,6 +25,7 @@ export const db = {
   statuses: createTable("statuses", STATUSES, statusesSchema),
   members: createTable("members", MEMBERS, membersSchema),
   mentors: createTable("mentors", MENTORS, mentorsSchema),
+  roles: createTable("roles", ROLES, rolesSchema),
   posts: createTable("posts", POSTS, postsSchema),
 
   join(from, fkColumn, alias) {
