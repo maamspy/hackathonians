@@ -1,5 +1,14 @@
 import Link from "next/link";
+import { JsonLd } from "@/components/shared";
 import { formatDate, getAllPosts } from "@/lib/blog";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  graphLd,
+  itemListLd,
+  pageMetadata,
+  webPageLd,
+} from "@/lib/seo";
 
 const ACCENTS = {
   blue: "bg-brand-blue",
@@ -7,10 +16,14 @@ const ACCENTS = {
   yellow: "bg-brand-yellow",
 };
 
-export const metadata = {
+const DESCRIPTION =
+  "Announcements, build stories, hackathon write-ups and the occasional 3am thought from Team Hackathonians.";
+
+export const metadata = pageMetadata({
   title: "Blog",
-  description: "What we shipped and what it cost us.",
-};
+  description: DESCRIPTION,
+  path: "/blogs",
+});
 
 export default async function BlogPage() {
   const posts = getAllPosts();
@@ -19,20 +32,40 @@ export default async function BlogPage() {
 
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd
+        data={graphLd([
+          webPageLd({
+            path: "/blogs",
+            title: "Blog | Hackathonians",
+            description: DESCRIPTION,
+            breadcrumb: breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Blog", path: "/blogs" },
+            ]),
+          }),
+          itemListLd(
+            "Blog posts",
+            posts.map((post) => ({
+              name: post.title,
+              url: absoluteUrl(`/blogs/${post.slug}`),
+            })),
+          ),
+        ])}
+      />
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
-            Blog
+            Blogs
           </h1>
           <p className="mt-3 text-lg text-foreground/70">
-            What we shipped and what it cost us.
+            Announcements, build stories, the occasional 3am thought.
           </p>
         </header>
 
         {featured && (
           <div className="mt-10">
             <Link
-              href={`/blog/${featured.slug}`}
+              href={`/blogs/${featured.slug}`}
               className="group flex flex-col overflow-hidden rounded-lg bg-card p-6 transition hover:bg-card/80 sm:p-8"
             >
               <span
@@ -59,7 +92,7 @@ export default async function BlogPage() {
           {rest.map((post) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={`/blogs/${post.slug}`}
               className="group flex flex-col overflow-hidden rounded-lg bg-card p-6 transition hover:bg-card/80"
             >
               <span

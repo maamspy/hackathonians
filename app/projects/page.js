@@ -5,7 +5,17 @@ import {
   AvatarGroup,
   AvatarImage,
 } from "@/components/ui";
+import { JsonLd } from "@/components/shared";
 import { getProjects } from "@/lib/projects";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  creativeWorkLd,
+  graphLd,
+  itemListLd,
+  pageMetadata,
+  webPageLd,
+} from "@/lib/seo";
 
 const ACCENTS = {
   blue: "bg-brand-blue",
@@ -13,11 +23,41 @@ const ACCENTS = {
   yellow: "bg-brand-yellow",
 };
 
+const DESCRIPTION =
+  "Open-source web, AI and data projects shipped by Team Hackathonians at hackathons across Bangladesh.";
+
+export const metadata = pageMetadata({
+  title: "Projects",
+  description: DESCRIPTION,
+  path: "/projects",
+});
+
 export default async function ProjectsPage() {
   const projects = await getProjects();
 
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd
+        data={graphLd([
+          webPageLd({
+            path: "/projects",
+            title: "Projects | Hackathonians",
+            description: DESCRIPTION,
+            breadcrumb: breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Projects", path: "/projects" },
+            ]),
+          }),
+          itemListLd(
+            "Projects",
+            projects.map((project) => ({
+              name: project.name,
+              url: absoluteUrl("/projects"),
+            })),
+          ),
+          ...projects.map((project) => creativeWorkLd(project)),
+        ])}
+      />
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">

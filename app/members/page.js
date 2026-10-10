@@ -1,18 +1,51 @@
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { FaGithub, FaGlobe, FaLinkedin } from "react-icons/fa";
+import { JsonLd } from "@/components/shared";
 import { getMembers } from "@/lib/members";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  graphLd,
+  itemListLd,
+  pageMetadata,
+  webPageLd,
+} from "@/lib/seo";
 
-export const metadata = {
+const DESCRIPTION =
+  "Meet the teenage developers of Team Hackathonians. The people who showed up to hackathons across Bangladesh and built things.";
+
+export const metadata = pageMetadata({
   title: "Members",
-  description: "The people who showed up and built things.",
-};
+  description: DESCRIPTION,
+  path: "/members",
+});
 
 export default async function MembersPage() {
   const members = (await getMembers()).filter((member) => member.membership);
 
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd
+        data={graphLd([
+          webPageLd({
+            path: "/members",
+            title: "Members | Hackathonians",
+            description: DESCRIPTION,
+            breadcrumb: breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Members", path: "/members" },
+            ]),
+          }),
+          itemListLd(
+            "Members",
+            members.map((member) => ({
+              name: member.name,
+              url: absoluteUrl(`/members/${member.id}`),
+            })),
+          ),
+        ])}
+      />
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">

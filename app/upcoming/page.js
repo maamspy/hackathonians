@@ -1,9 +1,26 @@
 import Image from "next/image";
+import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
 import { Button } from "@/components/custom";
 import { getGitHubProfile } from "@/lib/github";
 import { resolveMentors } from "@/lib/mentors";
 import { joinNames } from "@/lib/utils";
+import {
+  breadcrumbLd,
+  eventLd,
+  graphLd,
+  pageMetadata,
+  webPageLd,
+} from "@/lib/seo";
+
+const DESCRIPTION =
+  "Hackathons in Bangladesh that Team Hackathonians is joining next. Dates, venues and the teams we are entering.";
+
+export const metadata = pageMetadata({
+  title: "Upcoming Hackathons",
+  description: DESCRIPTION,
+  path: "/upcoming",
+});
 
 export default async function UpcomingPage() {
   const teams = db.join("teams", "eventId", "event");
@@ -42,6 +59,20 @@ export default async function UpcomingPage() {
 
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd
+        data={graphLd([
+          webPageLd({
+            path: "/upcoming",
+            title: "Upcoming Hackathons | Hackathonians",
+            description: DESCRIPTION,
+            breadcrumb: breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Upcoming", path: "/upcoming" },
+            ]),
+          }),
+          ...events.map((event) => eventLd(event)),
+        ])}
+      />
       <main className="py-10">
         <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
           Hackathons we are joining

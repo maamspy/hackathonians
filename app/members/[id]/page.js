@@ -2,10 +2,19 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Hash } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
+import { JsonLd } from "@/components/shared";
 import { FaGithub, FaGlobe, FaLinkedin } from "react-icons/fa";
 import { db } from "@/data";
-import { getMember, getMembers } from "@/lib/members";
+import { getMember } from "@/lib/members";
 import { formatDate } from "@/lib/blog";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  graphLd,
+  pageMetadata,
+  personLd,
+  webPageLd,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return db.members.all().map((member) => ({ id: member.id }));
@@ -13,9 +22,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const member = db.members.findById(id);
+  const member = await getMember(id);
   if (!member) return {};
-  return { title: `@${member.github}` };
+
+  return pageMetadata({
+    title: `${member.name} (@${member.github})`,
+    description: `${member.name} is a ${member.membership ? "member" : "contributor"} of Team Hackathonians in Dhaka, Bangladesh, taking part in hackathons and building open-source projects.`,
+    path: `/members/${member.id}`,
+  });
 }
 
 export default async function MemberPage({ params }) {
@@ -25,8 +39,54 @@ export default async function MemberPage({ params }) {
 
   const statusesById = new Map(db.statuses.all().map((s) => [s.id, s]));
 
+  const path = `/members/${member.id}`;
+  const projects = member.projects ?? [];
+
+  const sameAs = [
+    `https://github.com/${member.github}`,
+    member.linkedin ? `https://linkedin.com/in/${member.linkedin}` : null,
+    member.website ?? null,
+  ].filter(Boolean);
+
+  const jsonLd = graphLd([
+    webPageLd({
+      path,
+      title: `${member.name} | Hackathonians`,
+      description: `${member.name} | Member of Team Hackathonians.`,
+      breadcrumb: { "@id": `${absoluteUrl(path)}#breadcrumb` },
+    }),
+    {
+      ...breadcrumbLd([
+        { name: "Home", path: "/" },
+        { name: "Members", path: "/members" },
+        { name: member.name, path },
+      ]),
+      "@id": `${absoluteUrl(path)}#breadcrumb`,
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${absoluteUrl(path)}#profilepage`,
+      url: absoluteUrl(path),
+      name: `${member.name} | Hackathonians`,
+      isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+      about: { "@id": `${absoluteUrl(path)}#person` },
+      mainEntity: { "@id": `${absoluteUrl(path)}#person` },
+    },
+    personLd({
+      name: member.name,
+      path,
+      description: `${member.name} is a ${member.membership ? "member" : "contributor"} of Team Hackathonians, a teenage hackathon team in Dhaka, Bangladesh.`,
+      image: member.avatarUrl,
+      jobTitle: member.membership ? "Member" : "Contributor",
+      memberOf: { "@id": `${absoluteUrl("/")}#organization` },
+      knowsAbout: projects.flatMap((project) => project.tags ?? []),
+      sameAs,
+    }),
+  ]);
+
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd data={jsonLd} />
       <main className="py-10">
         <Link
           href="/members"
