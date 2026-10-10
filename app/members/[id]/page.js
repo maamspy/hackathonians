@@ -168,7 +168,12 @@ export default async function MemberPage({ params }) {
 
                 {team.event && (
                   <div className="mt-2 text-xs font-bold uppercase tracking-tight text-foreground/50">
-                    <p className="text-brand-blue">{team.event.name}</p>
+                    <Link
+                      href={`/events/${team.event.id}`}
+                      className="block text-brand-blue transition hover:text-brand-blue/70"
+                    >
+                      {team.event.name}
+                    </Link>
                     <time dateTime={team.event.date}>
                       {formatDate(team.event.date)}
                     </time>

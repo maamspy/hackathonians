@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
 import { Button } from "@/components/custom";
 import { getGitHubProfile } from "@/lib/github";
+import { eventsNewestFirst, isUpcoming } from "@/lib/events";
 import { resolveMentors } from "@/lib/mentors";
 import { joinNames } from "@/lib/utils";
 import {
@@ -28,13 +30,9 @@ export default async function UpcomingPage() {
     db.members.all().map((member) => [member.id, member]),
   );
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   const events = await Promise.all(
-    db.events
-      .all()
-      .filter((event) => new Date(event.date) >= today)
+    eventsNewestFirst()
+      .filter(isUpcoming)
       .map(async (event) => ({
         ...event,
         teams: await Promise.all(
@@ -96,18 +94,12 @@ export default async function UpcomingPage() {
             {events.map((event) => (
               <section key={event.id} className="bg-foreground/5 p-5 sm:p-8">
                 <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                  {event.url ? (
-                    <a
-                      href={event.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="transition hover:text-brand-blue"
-                    >
-                      {event.name}
-                    </a>
-                  ) : (
-                    event.name
-                  )}
+                  <Link
+                    href={`/events/${event.id}`}
+                    className="transition hover:text-brand-blue"
+                  >
+                    {event.name}
+                  </Link>
                 </h2>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   {event.teams.map((team) => (

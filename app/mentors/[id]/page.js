@@ -240,7 +240,12 @@ export default async function MentorPage({ params }) {
                   </div>
 
                   <div className="mt-2 text-xs font-bold uppercase tracking-tight text-foreground/50">
-                    <p className="text-brand-blue">{team.event.name}</p>
+                    <Link
+                      href={`/events/${team.event.id}`}
+                      className="block text-brand-blue transition hover:text-brand-blue/70"
+                    >
+                      {team.event.name}
+                    </Link>
                     <time dateTime={team.event.date}>
                       {formatDate(team.event.date)}
                     </time>
@@ -279,9 +284,12 @@ export default async function MentorPage({ params }) {
                   <span className="inline-flex items-center rounded-sm bg-brand-blue px-2 py-1 text-xs font-bold uppercase tracking-tight text-brand-white">
                     {entry.label}
                   </span>
-                  <h3 className="mt-3 text-lg font-bold tracking-tight">
+                  <Link
+                    href={`/events/${entry.event.id}`}
+                    className="mt-3 block text-lg font-bold tracking-tight transition hover:text-brand-blue"
+                  >
                     {entry.event.name}
-                  </h3>
+                  </Link>
                   <time
                     dateTime={entry.event.date}
                     className="mt-1 block text-xs font-bold uppercase tracking-tight text-foreground/50"

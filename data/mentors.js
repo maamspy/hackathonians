@@ -16,7 +16,10 @@ export const MENTORS = [
     linkedin: "tahnikahmed",
     website: "https://tahnik.codes/",
     accent: "purple",
-    experience: [{ role: "judge", eventId: "ai-engineering-hackathon" }],
+    experience: [
+      { role: "judge", eventId: "ai-engineering-hackathon" },
+      { role: "speaker", eventId: "infinity-ai-buildfest-2026" },
+    ],
     featured: true,
   },
   {
