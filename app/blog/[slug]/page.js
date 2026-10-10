@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
-import { ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { db } from "@/data";
 import { formatDate, getAllPosts, getPost } from "@/lib/blog";
@@ -25,15 +23,7 @@ export default async function BlogPostPage({ params }) {
   return (
     <div className="bg-background font-display text-foreground">
       <main className="py-10">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-tight text-foreground/60 transition hover:text-brand-blue"
-        >
-          <ArrowLeft className="size-4" aria-hidden />
-          All posts
-        </Link>
-
-        <article className="mx-auto mt-8 max-w-3xl">
+        <article className="mx-auto max-w-3xl">
           <header>
             <h1 className="text-[clamp(1.75rem,5vw,3rem)] font-bold leading-tight tracking-tight">
               {post.title}
