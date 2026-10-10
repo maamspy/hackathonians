@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/components/custom";
 import { NAV_LINKS } from "./links";
 
+const BAR_FADE = "duration-300 ease-out";
+
 function isActive(pathname, href) {
   return href === "/"
     ? pathname === href
@@ -25,16 +27,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const solid = !onHome || scrolled;
+  const overHero = onHome && !scrolled;
+  const solid = !overHero;
+  const navText = overHero ? "text-brand-white" : "text-foreground";
 
   return (
     <header className="sticky top-0 z-50 w-full">
       <div
         aria-hidden
-        className={`absolute inset-0 border-b transition-opacity duration-300 ${
+        className={`absolute inset-0 border-b transition-[background-color,border-color] ${BAR_FADE} ${
           solid
-            ? "border-border bg-background/95 opacity-100"
-            : "border-transparent opacity-0"
+            ? "border-border bg-background/95"
+            : "border-transparent bg-transparent"
         }`}
       />
       <nav className="relative container mx-auto flex h-16 items-center justify-between gap-4 px-3">
@@ -43,8 +47,14 @@ export default function Navbar() {
           className="flex min-w-0 items-center gap-2"
           onClick={() => setOpen(false)}
         >
-          <Logo variant="nav" className="h-6 w-auto shrink-0 sm:h-7" />
-          <span className="truncate font-display text-lg font-bold uppercase tracking-tight text-foreground">
+          <Logo
+            variant="nav"
+            mode={overHero ? "dark" : "auto"}
+            className="h-6 w-auto shrink-0 sm:h-7"
+          />
+          <span
+            className={`truncate font-display text-lg font-bold uppercase tracking-tight transition-colors ${BAR_FADE} ${navText}`}
+          >
             Hackathonians
           </span>
         </Link>
@@ -54,10 +64,8 @@ export default function Navbar() {
             <li key={href}>
               <Link
                 href={href}
-                className={`block whitespace-nowrap px-4 py-2 text-sm font-bold uppercase tracking-tight transition hover:text-brand-blue ${
-                  isActive(pathname, href)
-                    ? "text-brand-blue"
-                    : "text-foreground"
+                className={`block whitespace-nowrap px-4 py-2 text-sm font-bold uppercase tracking-tight transition-colors ${BAR_FADE} hover:text-brand-blue ${
+                  isActive(pathname, href) ? "text-brand-blue" : navText
                 }`}
               >
                 {label}
@@ -72,7 +80,7 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 text-foreground transition-colors md:hidden"
+          className={`flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 transition-colors ${BAR_FADE} ${navText} md:hidden`}
         >
           <span
             className={`h-0.5 w-6 bg-current transition ${
