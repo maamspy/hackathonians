@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
 import { db } from "@/data";
@@ -12,7 +13,27 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = db.posts.findById(slug);
   if (!post) return {};
-  return { title: post.title, description: post.description };
+
+  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${slug}/opengraph-image`;
+  const twitterImage = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${slug}/twitter-image`;
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      type: "article",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${slug}`,
+      title: post.title,
+      description: post.description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [twitterImage],
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }) {
@@ -24,6 +45,17 @@ export default async function BlogPostPage({ params }) {
     <div className="bg-background font-display text-foreground">
       <main className="py-10">
         <article className="mx-auto max-w-3xl">
+          {post.banner && (
+            <Image
+              src={post.banner}
+              alt=""
+              width={1200}
+              height={600}
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="mb-8 h-auto w-full rounded-lg border border-border"
+            />
+          )}
           <header>
             <h1 className="text-[clamp(1.75rem,5vw,3rem)] font-bold leading-tight tracking-tight">
               {post.title}
