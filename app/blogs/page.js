@@ -8,7 +8,7 @@ const ACCENTS = {
 };
 
 export const metadata = {
-  title: "Blog",
+  title: "Blogs",
   description: "Announcements, build stories, the occasional 3am thought.",
 };
 
@@ -22,7 +22,7 @@ export default async function BlogPage() {
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
-            Blog
+            Blogs
           </h1>
           <p className="mt-3 text-lg text-foreground/70">
             Announcements, build stories, the occasional 3am thought.
@@ -32,7 +32,7 @@ export default async function BlogPage() {
         {featured && (
           <div className="mt-10">
             <Link
-              href={`/blog/${featured.slug}`}
+              href={`/blogs/${featured.slug}`}
               className="group flex flex-col overflow-hidden rounded-lg bg-card p-6 transition hover:bg-card/80 sm:p-8"
             >
               <span
@@ -59,7 +59,7 @@ export default async function BlogPage() {
           {rest.map((post) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={`/blogs/${post.slug}`}
               className="group flex flex-col overflow-hidden rounded-lg bg-card p-6 transition hover:bg-card/80"
             >
               <span
