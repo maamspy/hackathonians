@@ -6,6 +6,7 @@ import { FaGithub, FaGlobe, FaLinkedin } from "react-icons/fa";
 import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
 import { formatDate } from "@/lib/blog";
+import { experienceForMentor } from "@/lib/mentors";
 import {
   absoluteUrl,
   breadcrumbLd,
@@ -64,6 +65,7 @@ export default async function MentorPage({ params }) {
   if (!mentor) notFound();
 
   const statusesById = new Map(db.statuses.all().map((s) => [s.id, s]));
+  const experience = experienceForMentor(mentor.id);
   const teams = db.teams
     .all()
     .filter((team) => team.mentors?.includes(mentor.id))
@@ -238,7 +240,12 @@ export default async function MentorPage({ params }) {
                   </div>
 
                   <div className="mt-2 text-xs font-bold uppercase tracking-tight text-foreground/50">
-                    <p className="text-brand-blue">{team.event.name}</p>
+                    <Link
+                      href={`/events/${team.event.id}`}
+                      className="block text-brand-blue transition hover:text-brand-blue/70"
+                    >
+                      {team.event.name}
+                    </Link>
                     <time dateTime={team.event.date}>
                       {formatDate(team.event.date)}
                     </time>
@@ -264,6 +271,36 @@ export default async function MentorPage({ params }) {
             </ul>
           )}
         </section>
+
+        {experience.length > 0 && (
+          <section className="mt-12">
+            <h2 className="text-2xl font-bold tracking-tight">Experience</h2>
+            <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {experience.map((entry) => (
+                <li
+                  key={`${entry.event.id}-${entry.id}`}
+                  className="rounded-lg bg-card p-5"
+                >
+                  <span className="inline-flex items-center rounded-sm bg-brand-blue px-2 py-1 text-xs font-bold uppercase tracking-tight text-brand-white">
+                    {entry.label}
+                  </span>
+                  <Link
+                    href={`/events/${entry.event.id}`}
+                    className="mt-3 block text-lg font-bold tracking-tight transition hover:text-brand-blue"
+                  >
+                    {entry.event.name}
+                  </Link>
+                  <time
+                    dateTime={entry.event.date}
+                    className="mt-1 block text-xs font-bold uppercase tracking-tight text-foreground/50"
+                  >
+                    {formatDate(entry.event.date)}
+                  </time>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
     </div>
   );

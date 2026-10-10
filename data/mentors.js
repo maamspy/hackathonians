@@ -16,6 +16,10 @@ export const MENTORS = [
     linkedin: "tahnikahmed",
     website: "https://tahnik.codes/",
     accent: "purple",
+    experience: [
+      { role: "judge", eventId: "ai-engineering-hackathon" },
+      { role: "speaker", eventId: "infinity-ai-buildfest-2026" },
+    ],
     featured: true,
   },
   {
@@ -42,6 +46,21 @@ export const MENTORS = [
     researchgate: "Md-Abdul-Hye-Zebon",
     website: "https://faculty.daffodilvarsity.edu.bd/profile/swe/zebon.html",
     accent: "yellow",
+    featured: true,
+  },
+  {
+    id: "abdullaharean",
+    name: "Abdullah Ibne Hanif Arean",
+    role: "AI Researcher",
+    organization: "University of Dhaka",
+    image: "/images/arean.jpeg",
+    bio: "Works on trustworthy AI, multimodal reasoning and low-resource NLP, with first-authored research published at ICDAR and accepted at AACL-IJCNLP. Co-founded ARIBD, a mentorship-driven research institute in Bangladesh and mentors the next generation of researchers through workshops and student leadership.",
+    topics: ["AI Safety", "Multimodal AI", "NLP"],
+    github: "AbdullahArean",
+    linkedin: "abdullaharean",
+    website: "https://abdullaharean.com/",
+    accent: "purple",
+    experience: [{ role: "judge", eventId: "infinity-ai-buildfest-2026" }],
     featured: true,
   },
 ];

@@ -1,4 +1,5 @@
 import { Code, ExternalLink } from "lucide-react";
+import Link from "next/link";
 import {
   Avatar,
   AvatarFallback,
@@ -138,7 +139,12 @@ export default async function ProjectsPage() {
                     {project.event && (
                       <p className="text-xs font-bold uppercase tracking-tight text-foreground/50">
                         <span className="block text-brand-blue">
-                          {project.event.name}
+                          <Link
+                            href={`/events/${project.event.id}`}
+                            className="transition hover:text-brand-blue"
+                          >
+                            {project.event.name}
+                          </Link>
                         </span>
                         {(project.event.poweredBy ?? project.event.host) && (
                           <span className="block truncate">

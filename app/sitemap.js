@@ -15,6 +15,7 @@ export default function sitemap() {
   const posts = getAllPosts();
   const members = db.members.all();
   const mentors = db.mentors.all();
+  const events = db.events.all();
 
   const lastPostDate = newestDate(posts.map((post) => post.date));
   const lastEventDate = newestDate(db.events.all().map((event) => event.date));
@@ -70,6 +71,14 @@ export default function sitemap() {
 
     ...mentors.map((mentor) =>
       entry(`/mentors/${mentor.id}`, {
+        changeFrequency: "monthly",
+        priority: 0.6,
+      }),
+    ),
+
+    ...events.map((event) =>
+      entry(`/events/${event.id}`, {
+        lastModified: event.date,
         changeFrequency: "monthly",
         priority: 0.6,
       }),

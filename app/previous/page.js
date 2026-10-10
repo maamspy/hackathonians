@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Hash } from "lucide-react";
 import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
 import { getGitHubProfile } from "@/lib/github";
+import { eventsNewestFirst, isPast } from "@/lib/events";
 import { resolveMentors } from "@/lib/mentors";
 import { joinNames } from "@/lib/utils";
 import {
@@ -40,14 +42,9 @@ export default async function PreviousPage() {
     db.members.all().map((member) => [member.id, member]),
   );
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
   const events = await Promise.all(
-    db.events
-      .all()
-      .filter((event) => new Date(event.date) < today)
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
+    eventsNewestFirst()
+      .filter(isPast)
       .map(async (event) => ({
         ...event,
         teams: await Promise.all(
@@ -108,18 +105,12 @@ export default async function PreviousPage() {
               <section key={event.id} className="bg-foreground/5 p-5 sm:p-8">
                 <header className="flex flex-wrap items-baseline justify-between gap-2">
                   <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                    {event.url ? (
-                      <a
-                        href={event.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition hover:text-brand-blue"
-                      >
-                        {event.name}
-                      </a>
-                    ) : (
-                      event.name
-                    )}
+                    <Link
+                      href={`/events/${event.id}`}
+                      className="transition hover:text-brand-blue"
+                    >
+                      {event.name}
+                    </Link>
                   </h2>
                   <time
                     dateTime={event.date}
