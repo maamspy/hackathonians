@@ -1,9 +1,38 @@
 import Image from "next/image";
 import { Button, Logo } from "@/components/custom";
+import { JsonLd } from "@/components/shared";
+import { getAllPosts } from "@/lib/blog";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  graphLd,
+  itemListLd,
+  siteConfig,
+  webPageLd,
+} from "@/lib/seo";
 
 export default function Home() {
+  const posts = getAllPosts().slice(0, 5);
+
+  const jsonLd = graphLd([
+    webPageLd({
+      path: "/",
+      title: `${siteConfig.name} | Teenage Hackathon Team from Dhaka, Bangladesh`,
+      description: siteConfig.description,
+      breadcrumb: breadcrumbLd([{ name: "Home", path: "/" }]),
+    }),
+    itemListLd(
+      "Latest posts",
+      posts.map((post) => ({
+        name: post.title,
+        url: absoluteUrl(`/blogs/${post.slug}`),
+      })),
+    ),
+  ]);
+
   return (
     <div className="relative -mt-16 ml-[calc(50%-50dvw)] h-dvh w-dvw overflow-hidden bg-brand-black">
+      <JsonLd data={jsonLd} />
       <Image
         src="/assets/images/bg.jpeg"
         alt=""

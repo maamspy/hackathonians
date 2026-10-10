@@ -1,6 +1,17 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaGithub, FaGlobe, FaLinkedin } from "react-icons/fa";
+import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
+import {
+  absoluteUrl,
+  breadcrumbLd,
+  graphLd,
+  itemListLd,
+  pageMetadata,
+  personLd,
+  webPageLd,
+} from "@/lib/seo";
 
 const ACCENTS = {
   blue: "bg-brand-blue",
@@ -24,16 +35,64 @@ const SOCIALS = [
   { key: "website", label: "Website", href: (m) => m.website, Icon: FaGlobe },
 ];
 
-export const metadata = {
+const DESCRIPTION =
+  "The engineers, researchers and lecturers who mentor Team Hackathonians at hackathons across Bangladesh.";
+
+export const metadata = pageMetadata({
   title: "Mentors",
-  description: "The mentors who show up for our teams.",
-};
+  description: DESCRIPTION,
+  path: "/mentors",
+});
+
+const sameAsFor = (mentor) =>
+  [
+    mentor.github ? `https://github.com/${mentor.github}` : null,
+    mentor.linkedin ? `https://linkedin.com/in/${mentor.linkedin}` : null,
+    mentor.researchgate
+      ? `https://www.researchgate.net/profile/${mentor.researchgate}`
+      : null,
+    mentor.website ?? null,
+  ].filter(Boolean);
 
 export default async function MentorsPage() {
   const mentors = db.mentors.all().filter((mentor) => mentor.featured);
 
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd
+        data={graphLd([
+          webPageLd({
+            path: "/mentors",
+            title: "Mentors | Hackathonians",
+            description: DESCRIPTION,
+            breadcrumb: breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Mentors", path: "/mentors" },
+            ]),
+          }),
+          itemListLd(
+            "Mentors",
+            mentors.map((mentor) => ({
+              name: mentor.name,
+              url: absoluteUrl(`/mentors/${mentor.id}`),
+            })),
+          ),
+          ...mentors.map((mentor) =>
+            personLd({
+              name: mentor.name,
+              path: `/mentors/${mentor.id}`,
+              description: mentor.bio,
+              image: mentor.image ? absoluteUrl(mentor.image) : undefined,
+              jobTitle: mentor.role,
+              worksFor: mentor.organization
+                ? { name: mentor.organization, url: mentor.organizationUrl }
+                : null,
+              knowsAbout: mentor.topics ?? [],
+              sameAs: sameAsFor(mentor),
+            }),
+          ),
+        ])}
+      />
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
@@ -81,7 +140,12 @@ export default async function MentorsPage() {
                   )}
                   <div className="min-w-0">
                     <h2 className="text-xl font-bold tracking-tight">
-                      {mentor.name}
+                      <Link
+                        href={`/mentors/${mentor.id}`}
+                        className="transition hover:text-brand-blue"
+                      >
+                        {mentor.name}
+                      </Link>
                     </h2>
                     <p className="mt-0.5 text-sm font-bold uppercase tracking-tight text-foreground/60">
                       {mentor.role}

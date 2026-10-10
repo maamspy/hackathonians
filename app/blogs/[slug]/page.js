@@ -2,8 +2,18 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui";
+import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
 import { formatDate, getAllPosts, getPost } from "@/lib/blog";
+import {
+  OG_SIZE,
+  absoluteUrl,
+  blogPostingLd,
+  breadcrumbLd,
+  graphLd,
+  pageMetadata,
+  webPageLd,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -14,26 +24,35 @@ export async function generateMetadata({ params }) {
   const post = db.posts.findById(slug);
   if (!post) return {};
 
-  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${slug}/opengraph-image`;
-  const twitterImage = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${slug}/twitter-image`;
+  const ogImage = `${absoluteUrl("/")}blogs/${slug}/opengraph-image`;
+  const twitterImage = `${absoluteUrl("/")}blogs/${slug}/twitter-image`;
 
-  return {
+  return pageMetadata({
     title: post.title,
     description: post.description,
-    openGraph: {
-      type: "article",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${slug}`,
-      title: post.title,
-      description: post.description,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-      images: [twitterImage],
-    },
-  };
+    path: `/blogs/${slug}`,
+    ogType: "article",
+    publishedTime: post.date,
+    modifiedTime: post.modifiedDate ?? post.date,
+    authors: post.author ? [`https://github.com/${post.author}`] : undefined,
+    tags: post.tags,
+    images: [
+      {
+        url: ogImage,
+        width: OG_SIZE.width,
+        height: OG_SIZE.height,
+        alt: post.title,
+      },
+    ],
+    twitterImages: [
+      {
+        url: twitterImage,
+        width: OG_SIZE.width,
+        height: OG_SIZE.height,
+        alt: post.title,
+      },
+    ],
+  });
 }
 
 export default async function BlogPostPage({ params }) {
@@ -41,8 +60,35 @@ export default async function BlogPostPage({ params }) {
   const post = await getPost(slug);
   if (!post) notFound();
 
+  const breadcrumbs = breadcrumbLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blogs" },
+    { name: post.title, path: `/blogs/${slug}` },
+  ]);
+
+  const jsonLd = graphLd([
+    webPageLd({
+      path: `/blogs/${slug}`,
+      title: post.title,
+      description: post.description,
+      breadcrumb: { "@id": `${absoluteUrl(`/blogs/${slug}`)}#breadcrumb` },
+    }),
+    { ...breadcrumbs, "@id": `${absoluteUrl(`/blogs/${slug}`)}#breadcrumb` },
+    blogPostingLd(post, {
+      author: post.author
+        ? {
+            name: post.author.name,
+            username: post.author.username,
+            url: `https://github.com/${post.author.username}`,
+          }
+        : null,
+      image: post.banner ? absoluteUrl(post.banner) : undefined,
+    }),
+  ]);
+
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd data={jsonLd} />
       <main className="py-10">
         <article className="mx-auto max-w-3xl">
           {post.banner && (

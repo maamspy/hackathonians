@@ -1,9 +1,26 @@
 import Image from "next/image";
 import { Hash } from "lucide-react";
+import { JsonLd } from "@/components/shared";
 import { db } from "@/data";
 import { getGitHubProfile } from "@/lib/github";
 import { resolveMentors } from "@/lib/mentors";
 import { joinNames } from "@/lib/utils";
+import {
+  breadcrumbLd,
+  eventLd,
+  graphLd,
+  pageMetadata,
+  webPageLd,
+} from "@/lib/seo";
+
+const DESCRIPTION =
+  "Every hackathon Team Hackathonians has taken part in across Bangladesh, with results, teams and the projects we shipped.";
+
+export const metadata = pageMetadata({
+  title: "Previous Hackathons",
+  description: DESCRIPTION,
+  path: "/previous",
+});
 
 const formatDate = (date) =>
   new Date(date).toLocaleDateString("en-US", {
@@ -54,6 +71,20 @@ export default async function PreviousPage() {
 
   return (
     <div className="bg-background font-display text-foreground">
+      <JsonLd
+        data={graphLd([
+          webPageLd({
+            path: "/previous",
+            title: "Previous Hackathons | Hackathonians",
+            description: DESCRIPTION,
+            breadcrumb: breadcrumbLd([
+              { name: "Home", path: "/" },
+              { name: "Previous", path: "/previous" },
+            ]),
+          }),
+          ...events.map((event) => eventLd(event)),
+        ])}
+      />
       <main className="py-10">
         <header className="max-w-2xl">
           <h1 className="text-[clamp(2rem,6vw,3.5rem)] font-bold leading-tight tracking-tight">
