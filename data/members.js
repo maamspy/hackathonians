@@ -25,6 +25,13 @@ export const MEMBERS = [
     linkedin: "maamspy",
     website: "https://maamspy.com/",
   },
+    {
+    id: "abirbinbilal",
+    github: "Abir-Bin-Billal",
+    membership: true,
+    linkedin: "abir-bin-billal-74b33a237",
+    website: "http://abir.pro.bd/",
+  },
   {
     id: "saminyasar004",
     github: "saminyasar004",
