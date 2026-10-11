@@ -6,9 +6,9 @@ export const MENTORS = [
   {
     id: "tahnik-ahmed",
     name: "Tahnik Ahmed",
-    role: "Lead ML & DataOps Engineer",
-    organization: "Poridhi",
-    organizationUrl: "https://poridhi.io/",
+    role: "Chief Technology Officer",
+    organization: "AiDeployed.io",
+    organizationUrl: "https://www.aideployed.io",
     image: "/images/tahnik-ahmed-vai.jpeg",
     bio: "Builds infrastructure that makes AI systems work in production. Inference engine internals, self-healing Kubernetes platforms and fault-tolerant MLOps pipelines. Maintains OSS tooling and writes up what broke along the way.",
     topics: ["MLOps", "AI Infra"],
